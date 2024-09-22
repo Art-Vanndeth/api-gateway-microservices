@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: git,vault
+
+  cloud:
+    config:
+      server:
+
+        git:
+          uri: https://github.com/Art-Vanndeth/vault-gateway-config.git
+          username: <git-username>
+          password: <git-token>
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+
+        vault:
+          scheme: http
+          host: <vault-server>
+          port: 9000
+          authentication: token
+          token: <vault-token>
+          backend: secret
+          kv-version: 2
+
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
